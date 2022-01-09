@@ -3,8 +3,7 @@ const Link          = ReactRouterDOM.Link;
 const HashRouter    = ReactRouterDOM.HashRouter;
 const UserContext   = React.createContext(null);
 
-// Global variable to manage the current User identifier
-// makes use of the login for-loop and provides a user Index to use across all pages
+
 let currentUserIndex = 0;
 function assignUserID(userID) {
     currentUserIndex = userID-1;
@@ -22,13 +21,10 @@ function Card(props) {
     const ctx = React.useContext(UserContext);
     let users = [...ctx.users];
     
-    // balance uses global userID to retrieve balance
     let balance = users[currentUserIndex].balance;
     let userName = users[currentUserIndex].name;
-    // debugging only
     console.log(`Balance of ${userName} is ${balance}`);
   
-  // validation function used in handleCreate
   function validate(field, label) {
     if (!field) {
         setStatus('Error: ' + label);
@@ -38,19 +34,17 @@ function Card(props) {
     }
     if (field === deposit) {
         if (deposit <= 0) {
-            alert("Enter a positive number value to deposit");
+            alert("Invalid output, positive numbers only");
             return false;
         }
     }
     if (field === withdraw) {
         if (withdraw <= 0) {
-            alert("Enter a positive number value to withdraw");
+            alert("Invalid output, positive numbers only");
             return false;
         }
     }
-    // email validation in progress
     if (field === email) {
-      // check that email string contains the @ symbol
       if (email.includes('@') === true) return true;
       else {
         alert("Enter Valid Email");
@@ -61,11 +55,11 @@ function Card(props) {
   }
 
     function validateForm() {
-        return password.length > 8 && name.length > 0 && email.length > 0;
+        return password.length > 8 && name.length > 1 && email.length > 1;
     }
 
     function validateLogin() {
-        return password.length > 8 && name.length > 0;
+        return password.length > 8 && name.length > 1;
     }
     
     function handleCreate() {
@@ -103,12 +97,11 @@ function Card(props) {
     }
 
     function handleWithdraw() {
-        if (!validate(name,       'name'))       return;
-        if (!validate(withdraw,    'withdrawl'))    return;
+        if (!validate(name,    'name'))       return;
+        if (!validate(withdraw,  'withdrawl'))    return;
         if (name === users[currentUserIndex].name){
             if ((Number(withdraw)) <= balance) {
                 console.log(name, `Withdrawl amount: ${withdraw}`);
-                //ctx.users.push({withdraw});
                 users[currentUserIndex].balance -= Number(withdraw);
                 setShow(false);
             } else {
@@ -125,27 +118,22 @@ function Card(props) {
     function handleLogin() {
         if (!validate(name,     'name'))     return;
         if (!validate(password, 'password')) return;
-        // loop over users array and check for the same name as entered
         for (let i = 0; i <= users.length - 1; i++){
-            // check if counter gets to end of users list and finds nothing
             if (i === (users.length -1) && users[i].name !== name) {
-                alert("Not a Current User: Please Create Account or try other credentials");
+                alert("Not a current user: Please create an account or try different credentials");
                 setShow(true);
                 clearForm();
                 return;
             }
-            // name is not the name at the position in the list
             if (name !== users[i].name){
                 continue;
             }
-            // name is the name in the list but password incorrect
             if (name === users[i].name && password !== users[i].password) {
                 alert("Incorrect Password, try again...");
                 setShow(true);
                 setPassword('');
                 return;
             }
-            // name is the name in the list and password is correct
             if (name === users[i].name && password === users[i].password){
                 let userID = users[i].id;
                 alert(`Current User is ${users[i].name} with id: ${userID}`);
@@ -164,13 +152,12 @@ function Card(props) {
     }
 
     return (
-        <div className={classes()} style={{maxWidth: "18rem"}}>
+        <div className={classes()} style={{maxWidth: "50rem"}}>
             <div className="card-header">{props.header}</div>
             <div className="card-body">
                 {props.title && (<h5 className="card-title">{props.title}</h5>)}
                 {props.text && (<p className="card-text">{props.text}</p>)}
                 {props.body}
-                {/* Create Account Card */}
                 {props.handle && show ? (
                    <>
                    Name<br/>
@@ -187,12 +174,11 @@ function Card(props) {
                     <div className="card text-white text-center bg-success mb-3">
                        <h5>Success</h5>
                     </div>
-                    <button type="submit" className="btn btn-secondary" onClick={clearForm} >{props.submitButton}</button>
+                    <button type="submit" className="btn btn-warning" onClick={clearForm} >{props.submitButton}</button>
                    </>
                 )
                 )}
                 {props.status && (<div id="'createStatus">{props.status}</div>)}
-                {/* Deposit Card */}
                 {props.deposit && show ? (
                   <>
                   Balance for {userName}'s Account           {balance} <br/><br/>
@@ -209,11 +195,10 @@ function Card(props) {
                     <div className="card text-white text-center bg-success mb-3">
                       <h5>Successful Deposit</h5>
                     </div>
-                    <button type="submit" className="btn btn-secondary" onClick={clearForm} >Make another Transaction</button>
+                    <button type="submit" className="btn btn-warning" onClick={clearForm} >Make another Transaction</button>
                     </>
                   )
                 )}
-                {/* Withdraw Card */}
                 {props.withdraw && show ? (
                   <>
                   Balance for {userName}'s Account           {balance} <br/><br/>
@@ -230,11 +215,10 @@ function Card(props) {
                     <div className="card text-white text-center bg-success mb-3">
                       <h5>Successful Withdrawl</h5>
                     </div>
-                    <button type="submit" className="btn btn-secondary" onClick={clearForm} >Make another Transaction</button>
+                    <button type="submit" className="btn btn-warning" onClick={clearForm} >Make another Transaction</button>
                     </>
                     )
                 )}
-                {/* Login Card */}
                 {props.login && show ? (
                   <>
                   Enter Account Name<br/>
@@ -248,11 +232,10 @@ function Card(props) {
                   <div className="card text-white text-center bg-success mb-3">
                     <h5>Success</h5>
                   </div>
-                  <button type="submit" className="btn btn-secondary" onClick={clearForm} >Continue to Account</button>
+                  <button type="submit" className="btn btn-warning" onClick={clearForm} >Continue to Account</button>
                   </>
                   )
                 )}
-                {/* All Data card */}
                 {props.allData && (
                 <>
                   Name: {props.allData[0]}<br/>
