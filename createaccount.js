@@ -10,7 +10,7 @@ function CreateAccount() {
 
   return (
       <Card
-        bgcolor="secondary"
+        bgcolor="primary"
         header="Create Account"
         handle={handle}
         submitButton="Create another account"
