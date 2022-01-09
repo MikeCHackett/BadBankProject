@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Bad Bank</title>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Bad Bank</title>
 
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- bootstrap css -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 
-    <!-- don't use this in production: -->
+        <!-- don't use this in production: Babel transpiler-->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
-  <body>
-    <!-- we will put our teact component inside this div -->
+
+    </head>
+    <body>
+        <!-- react component contained inside this div -->
     <div id="root"></div>
 
-    <!-- load react -->
+    <!-- load react and router -->
     <script src="https://unpkg.com/react/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router/umd/react-router.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router-dom/umd/react-router-dom.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@5.2.1/umd/react-router.min.js" crossorigin></script>
+    <script
+      src="https://unpkg.com/react-router-dom@5.2.1/umd/react-router-dom.min.js"
+      crossorigin
+    ></script>
 
-    <!-- load our react component. -->
+    <!-- load react components -->
     <script src="context.js" defer type="text/babel"></script>
     <script src="navbar.js" defer type="text/babel"></script>
     <script src="createaccount.js" defer type="text/babel"></script>
@@ -31,6 +35,5 @@
     <script src="home.js" defer type="text/babel"></script>
     <script src="index.js" defer type="text/babel"></script>
 
-
-  </body>
+    </body>
 </html>
