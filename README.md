@@ -35,6 +35,9 @@ $ open index.html
 ### Mike 
 - [Link to Github](https://github.com/MikeCHackett)
 
+## Features to be added
+- I would like to add authentification features as well as logic to make the UI more user friendly.
+
 ## Credits
 Copyright (c) 2021 John Williams
 
